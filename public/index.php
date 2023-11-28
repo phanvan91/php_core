@@ -1,12 +1,7 @@
 <?php
 
+require __DIR__.'/../vendor/autoload.php';
 
-// include core
-include_once './core/Init.php';
-
-
-// setup router
-include_once './routes/router.php';
-
-
+// setup bootstrap
+require __DIR__.'/../bootstrap/app.php';
 
