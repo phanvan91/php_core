@@ -1,0 +1,13 @@
+#!/usr/bin/env php
+<?php
+
+require __DIR__ . '/vendor/autoload.php';
+
+use Core\CoreCli;
+
+if (php_sapi_name() !== 'cli') {
+    exit;
+}
+
+$app = new CoreCli();
+$app->runCommand($argv);
