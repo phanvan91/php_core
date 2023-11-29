@@ -6,9 +6,10 @@ bạn muốn sử dụng ư.....
 clone từ đây: https://github.com/phanvan91/php_core
 
 Cài đặt môi trường:
-- PHP >= 8.0 
+- PHP >= 8.0
 
 Start:
+- Composer dump-autoload
 - php core-cli serve
 
 quất thôi........
