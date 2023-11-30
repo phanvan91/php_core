@@ -1,10 +1,15 @@
 <?php
 namespace App\Controllers;
 
+use Core\DI\Request;
+
 class HomeController
 {
-    public function index()
+    private Request $request;
+
+    public function index(Request $request) //Request $request
     {
+//        dd($request->all());
         return view('users');
     }
 }
