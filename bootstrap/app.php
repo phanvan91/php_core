@@ -4,11 +4,16 @@ use Core\Routes\Route;
 
 use Core\DIContainer;
 use Core\DI\Request;
+use App\Repositories\UserRepositoryInterface;
+use App\Repositories\UserRepository;
+use App\Controllers\HomeController;
 
 
-$container = new DIContainer();
+//$container = new DIContainer();
 
-$container->addService('Request', new Request());
+$instance = DIContainer::instance();
+//$class = $instance->make(HomeController::class);
+$instance->call(['HomeController', 'index']);
 
 
 // setup router

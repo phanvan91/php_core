@@ -1,15 +1,24 @@
 <?php
+
 namespace App\Controllers;
 
+use App\Repositories\UserRepository;
 use Core\DI\Request;
+use App\Repositories\UserRepositoryInterface;
 
 class HomeController
 {
-    private Request $request;
+    protected Request $request;
 
-    public function index(Request $request) //Request $request
+    protected UserRepository $userRepository;
+
+//    public function __construct()
+//    {
+//    }
+
+    public function index(UserRepository $qq) //Request $request
     {
-//        dd($request->all());
+        dd($qq->list());
         return view('users');
     }
 }
