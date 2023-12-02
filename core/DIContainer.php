@@ -41,7 +41,7 @@ class DIContainer
      *
      * @var string
      */
-    protected $namespace = "App\\controllers\\";
+    protected $namespace = "App\\Controllers\\";
 
 
     /**

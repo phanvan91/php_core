@@ -18,7 +18,6 @@ class HomeController
 
     public function index(UserRepository $qq) //Request $request
     {
-        dd($qq->list());
         return view('users');
     }
 }
