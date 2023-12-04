@@ -17,7 +17,9 @@
   </component>
   <component name="PhpInterpreters">
     <interpreters>
-      <interpreter id="d54411af-3db4-4f93-aa41-74cb06cb4d44" name="Ubuntu22.04-v1" home="\\wsl$\Ubuntu22.04-v1/usr/bin/php" auto="false" debugger_id="php.debugger.XDebug" />
+      <interpreter id="027d8d4f-5c55-48bc-a9c8-f2c1ce3d0a64" name="Ubuntu22.04-v1" home="\\wsl$\Ubuntu22.04-v1/usr/bin/php" auto="false" debugger_id="php.debugger.XDebug">
+        <remote_data INTERPRETER_PATH="/usr/bin/php" HELPERS_PATH="" VALID="true" RUN_AS_ROOT_VIA_SUDO="false" DISTRIBUTION_ID="Ubuntu22.04-v1" />
+      </interpreter>
     </interpreters>
   </component>
   <component name="PhpInterpretersPhpInfoCache">

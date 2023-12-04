@@ -73,7 +73,6 @@ class DIContainer
         // get all dependencies/parameters
         $methodParams = $methodReflection->getParameters();
 
-
         $dependencies = [];
 
         // loop with dependencies/parameters
@@ -82,7 +81,6 @@ class DIContainer
             $type = $param->getType(); // check type
 
             if ($type && $type instanceof ReflectionNamedType) { /// if parameter is a class
-
                 $name = $param->getClass()->newInstance(); // create insrance
                 array_push($dependencies, $name); // push  to $dependencies array
 
@@ -137,6 +135,7 @@ class DIContainer
      * @param $parameters (optional) -- parameters as array . If constructor need any parameter
      */
     public function make($class, $parameters = [])
+
     {
         $classReflection = new ReflectionClass($class);
 

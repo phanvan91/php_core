@@ -1,30 +1,35 @@
 <?php
 
 use Core\Routes\Route;
-
 use Core\DIContainer;
-use Core\DI\Request;
-use App\Repositories\UserRepositoryInterface;
-use App\Repositories\UserRepository;
+use Core\Config;
 use App\Controllers\HomeController;
 
+$instance = DIContainer::instance();
+
+$class = $instance->make(HomeController::class);
+
+$instance->call(['HomeController', 'index']);
+////
+$instance->call(['TestController', 'index']);
 
 //$container = new DIContainer();
 
-$instance = DIContainer::instance();
-//$class = $instance->make(HomeController::class);
-$instance->call(['HomeController', 'index']);
 
 
 // setup router
 require __DIR__.'/../routes/view.php';
 require __DIR__.'/../routes/api.php';
 
-$requestMethod = $_SERVER['REQUEST_METHOD'];
-$requestUri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+$requestMethod = Config::get('app.server_request_method');
+$requestUri = Config::get('app.server_request_uri_path');
 
 $dispatcher = new Route($requestMethod, $requestUri);
 $dispatcher->dispatch();
+
+
+
+
 
 
 
