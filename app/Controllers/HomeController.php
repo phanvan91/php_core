@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection ALL */
 
 namespace App\Controllers;
 
@@ -6,7 +6,7 @@ use App\Repositories\UserRepository;
 use Core\DI\Request;
 use App\Repositories\UserRepositoryInterface;
 
-class HomeController
+class HomeController extends Controller
 {
     protected Request $request;
 
@@ -27,6 +27,6 @@ class HomeController
         $data = request()->only([
         ]);
 
-        dd($data);
+        return $this->responseApi($data);
     }
 }
