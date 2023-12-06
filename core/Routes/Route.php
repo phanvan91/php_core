@@ -26,6 +26,11 @@ class Route
         self::addRoute('GET', $route, $action);
     }
 
+    public static function post($route, $action)
+    {
+        self::addRoute('POST', $route, $action);
+    }
+
     public function dispatch()
     {
         foreach (self::$routes[$this->requestMethod] as $route => $action) {

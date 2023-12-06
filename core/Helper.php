@@ -1,13 +1,12 @@
 <?php
-use Core\Config;
 
+use Core\Config;
+use Core\Request\Request;
 
 if (!function_exists('dd')) {
     function dd($value)
     {
-        echo '<pre>';
         var_dump($value);
-        echo '</pre>';
         die();
     }
 }
@@ -24,5 +23,14 @@ if (!function_exists('view')) {
         }
 
         return null;
+    }
+}
+
+if (!function_exists('request')) {
+    function request()
+    {
+        $request = new Request();
+
+        return $request;
     }
 }

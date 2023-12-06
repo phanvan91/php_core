@@ -16,8 +16,17 @@ class HomeController
 //    {
 //    }
 
-    public function index(UserRepository $qq) //Request $request
+    public function index() //Request $request
     {
+        var_dump($_SERVER);
         return view('users');
+    }
+
+    public function testPost()
+    {
+        $data = request()->only([
+        ]);
+
+        dd($data);
     }
 }
