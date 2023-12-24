@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Repositories\UserRepository;
+use Core\DB\DB;
 use Core\DI\Request;
 use App\Repositories\UserRepositoryInterface;
 
@@ -18,12 +19,17 @@ class HomeController extends Controller
 
     public function index() //Request $request
     {
-        var_dump($_SERVER);
+        DB::getValueDB();
+
+//        var_dump($_SERVER);
         return view('users');
     }
 
     public function testPost()
     {
+
+
+
         $data = request()->only([
         ]);
 

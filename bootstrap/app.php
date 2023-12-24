@@ -4,6 +4,7 @@ use Core\Routes\Route;
 use Core\DIContainer;
 use Core\Config;
 use App\Controllers\HomeController;
+use Core\DB\DB;
 
 //$instance = DIContainer::instance();
 
@@ -16,13 +17,16 @@ use App\Controllers\HomeController;
 //$container = new DIContainer();
 
 
-
 // setup router
-require __DIR__.'/../routes/view.php';
-require __DIR__.'/../routes/api.php';
+require __DIR__ . '/../routes/view.php';
+require __DIR__ . '/../routes/api.php';
 
 $requestMethod = Config::get('app.server_request_method');
 $requestUri = Config::get('app.server_request_uri_path');
 
 $dispatcher = new Route($requestMethod, $requestUri);
 $dispatcher->dispatch();
+
+// run DB
+$db = new DB();
+$db->getConnection();
