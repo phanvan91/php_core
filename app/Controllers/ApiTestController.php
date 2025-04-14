@@ -6,18 +6,10 @@ use App\Repositories\UserRepository;
 use Core\DI\Request;
 use App\Repositories\UserRepositoryInterface;
 
-class HomeController
+class ApiTestController
 {
-    protected Request $request;
-
-    protected UserRepository $userRepository;
-
-//    public function __construct()
-//    {
-//    }
-
     public function index() //Request $request
     {
-        return view('users');
+        echo 'ecasdasd';
     }
 }

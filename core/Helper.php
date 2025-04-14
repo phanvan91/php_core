@@ -1,6 +1,6 @@
 <?php
-use Core\Config;
 
+use Core\Config;
 
 if (!function_exists('dd')) {
     function dd($value)

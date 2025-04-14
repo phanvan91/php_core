@@ -11,9 +11,9 @@ use App\Controllers\HomeController;
 
 //$container = new DIContainer();
 
-$instance = DIContainer::instance();
+//$instance = DIContainer::instance();
 //$class = $instance->make(HomeController::class);
-$instance->call(['HomeController', 'index']);
+//$instance->call(['HomeController', 'index']);
 
 
 // setup router
