@@ -1,19 +1,40 @@
-# php_core
-Đây là Framework PHP của tôi phát triển 
+# PHP Core Framework
 
-bạn muốn sử dụng ư.....
+This is a lightweight PHP framework developed by me (phanvan91), intended for fast prototyping, educational purposes, or small-to-medium web applications.
 
-clone từ đây: https://github.com/phanvan91/php_core
+## 📦 Repository
 
-Cài đặt môi trường:
-- PHP >= 8.0
+You can clone the framework from GitHub:
 
-Start:
-- Composer dump-autoload
-- php core-cli serve
+```
+git clone https://github.com/phanvan91/php_core
+```
 
-quất thôi........
+## ⚙️ Environment Requirements
 
-Framework đang phát triển cho nên còn sơ sót vui lòng bỏ qua :v
+- PHP version >= 8.0
+- Composer (dependency manager for PHP)
 
+## 🚀 Getting Started
+
+1. Install dependencies and regenerate autoload files:
+    ```
+    composer dump-autoload
+    ```
+
+2. Start the local development server:
+    ```
+    php core-cli serve
+    ```
+
+The application should now be running on `http://localhost:8000`.
+
+## 🧪 Notes
+
+- This framework is currently under active development. You may encounter some bugs or incomplete features.
+- Feedback, suggestions, and contributions are highly welcome!
+
+## 🙏 Acknowledgements
+
+Thank you for checking out this project. I hope it helps you in learning or building your PHP applications!
 
