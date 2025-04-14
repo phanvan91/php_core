@@ -16,7 +16,7 @@ class HomeController
 //    {
 //    }
 
-    public function index() //Request $request
+    public function index()
     {
         return view('users');
     }
