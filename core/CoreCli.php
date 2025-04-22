@@ -12,6 +12,10 @@ class CoreCli
                 if ($name === 'serve') {
                     return exec('php -S 127.0.0.1:8001 public/index.php');
                 }
+
+                if($name === 'make:structure') {
+                    return exec("tree -a -L 3 --noreport --charset=ascii -I 'vendor|node_modules|info|.git|dist|uploads|.idea|.sequelizerc|yarn.lock'> structure.txt");
+                }
                 break;
             case 3:
                 $firstParameter = $argv[1];

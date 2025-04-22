@@ -2,6 +2,8 @@
 
 namespace Core\Routes;
 
+use Core\DIContainer;
+
 class Route
 {
     public static $routes = array();
@@ -26,11 +28,36 @@ class Route
         self::addRoute('GET', $route, $action);
     }
 
+    public static function post($route, $action)
+    {
+        self::addRoute('POST', $route, $action);
+    }
+
+    public static function put($route, $action)
+    {
+        self::addRoute('PUT', $route, $action);
+    }
+
+    public static function delete($route, $action)
+    {
+        self::addRoute('DELETE', $route, $action);
+    }
+
     public function dispatch()
     {
         foreach (self::$routes[$this->requestMethod] as $route => $action) {
-            if ($route === $this->requestUri) {
-                return $this->executeAction($action);
+            // Convert route pattern to regex
+            $pattern = preg_replace('/\{([a-zA-Z0-9_]+)\}/', '(?P<$1>[^/]+)', $route);
+            $pattern = str_replace('/', '\/', $pattern);
+            $pattern = '/^' . $pattern . '$/';
+
+            if (preg_match($pattern, $this->requestUri, $matches)) {
+                // Remove numeric keys from matches
+                $params = array_filter($matches, function($key) {
+                    return !is_numeric($key);
+                }, ARRAY_FILTER_USE_KEY);
+
+                return $this->executeAction($action, $params);
             }
         }
 
@@ -38,15 +65,18 @@ class Route
         echo '404 Not Found';
     }
 
-    private function executeAction($action)
+    private function executeAction($action, $params = [])
     {
         if (is_callable($action)) {
-            return $action();
+            return $action(...$params);
         }
         list($controller, $method) = explode('@', $action);
         $controller = "App\\Controllers\\". $controller;
 
-        $controller = new $controller;
-        return $controller->$method();
+        // Use DI Container to create controller instance
+        $container = DIContainer::instance();
+        $controller = $container->make($controller);
+        
+        return $controller->$method(...$params);
     }
 }

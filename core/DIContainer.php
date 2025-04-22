@@ -16,7 +16,6 @@ class DIContainer
      */
     protected static $instance;
 
-
     /**
      * the class name with namespace
      *
@@ -43,6 +42,8 @@ class DIContainer
      */
     protected $namespace = "App\\Controllers\\";
 
+    protected $bindings = [];
+    protected $instances = [];
 
     /**
      *   get Singleton instance of the class
@@ -138,48 +139,97 @@ class DIContainer
      */
     public function make($class, $parameters = [])
     {
-        $classReflection = new ReflectionClass($class);
-
-        $constructorParams = $classReflection->getConstructor()?->getParameters() ?? [];
-        $dependencies = [];
-
-        /*
-         * loop with constructor parameters or dependency
-         */
-        foreach ($constructorParams as $constructorParam) {
-
-            $type = $constructorParam->getType();
-
-            if ($type && $type instanceof ReflectionNamedType) {
-
-                // make instance of this class :
-                $paramInstance = $constructorParam->getClass()->newInstance();
-
-                // push to $dependencies array
-                array_push($dependencies, $paramInstance);
-
-            } else {
-
-                $name = $constructorParam->getName(); // get the name of param
-
-                // check this param value exist in $parameters
-                if (array_key_exists($name, $parameters)) { // if exist
-
-                    // push  value to $dependencies sequencially
-                    array_push($dependencies, $parameters[$name]);
-
-                } else { // if not exist
-
-                    if (!$constructorParam->isOptional()) { // check if not optional
-                        throw new Exception("Can not resolve parameters");
-                    }
-
-                }
-
-            }
-
+        if (isset($this->instances[$class])) {
+            return $this->instances[$class];
         }
-        // finally pass dependancy and param to class instance
-        return $classReflection->newInstance(...$dependencies);
+
+        $concrete = $this->getConcrete($class);
+        
+        if ($this->isBuildable($concrete, $class)) {
+            $object = $this->build($concrete);
+        } else {
+            $object = $this->make($concrete);
+        }
+
+        if (isset($this->instances[$class])) {
+            $this->instances[$class] = $object;
+        }
+
+        return $object;
+    }
+
+    protected function getConcrete($abstract)
+    {
+        if (isset($this->bindings[$abstract])) {
+            return $this->bindings[$abstract];
+        }
+        return $abstract;
+    }
+
+    protected function isBuildable($concrete, $abstract)
+    {
+        return $concrete === $abstract || $concrete instanceof Closure;
+    }
+
+    protected function build($concrete)
+    {
+        if ($concrete instanceof Closure) {
+            return $concrete($this);
+        }
+
+        $reflector = new ReflectionClass($concrete);
+
+        if (!$reflector->isInstantiable()) {
+            throw new Exception("Target [$concrete] is not instantiable.");
+        }
+
+        $constructor = $reflector->getConstructor();
+
+        if (is_null($constructor)) {
+            return new $concrete;
+        }
+
+        $dependencies = $constructor->getParameters();
+        $instances = $this->resolveDependencies($dependencies);
+
+        return $reflector->newInstanceArgs($instances);
+    }
+
+    protected function resolveDependencies($dependencies)
+    {
+        $results = [];
+
+        foreach ($dependencies as $dependency) {
+            $type = $dependency->getType();
+
+            if ($type && !$type->isBuiltin()) {
+                $results[] = $this->make($type->getName());
+            } else {
+                if ($dependency->isDefaultValueAvailable()) {
+                    $results[] = $dependency->getDefaultValue();
+                } else {
+                    throw new Exception("Can not resolve dependency {$dependency->name}");
+                }
+            }
+        }
+
+        return $results;
+    }
+
+    public function bind($abstract, $concrete = null)
+    {
+        if (is_null($concrete)) {
+            $concrete = $abstract;
+        }
+        $this->bindings[$abstract] = $concrete;
+    }
+
+    public function singleton($abstract, $concrete = null)
+    {
+        if (is_null($concrete)) {
+            $concrete = $abstract;
+        }
+        $this->bindings[$abstract] = $concrete;
+        $this->instances[$abstract] = null;
     }
 }
